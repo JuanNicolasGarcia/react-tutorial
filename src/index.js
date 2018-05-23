@@ -1,25 +1,39 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
+import React from 'react';
+import ReactDOM from 'react-dom';
 
-class Inc extends React.Component{
-  constructor(props){
-    super(props);
-    this.state = {counter : 0}
+function Message(props){
+  if(props.value){
+    return <h1>This is first message</h1>
+  }
+  else {
+    return <h1>I am from second message</h1>
   }
 
-  increment = (e) => {
-    e.preventDefault();
+}
+
+class Btn extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {value:true}
+  }
+
+  handleClick = () => {
     this.setState({
-      counter : this.state.counter + 1
+      value : !this.state.value
     })
   }
 
-  render(){
-    return <button href='http://google.com' onClick={this.increment}>Value is {this.state.counter}</button>
+  render (){
+    return (
+      <div>
+        <button onClick= {this.handleClick}>Change the message</button>
+        <Message value={this.state.value} />
+      </div>
+    );
   }
 }
 
 ReactDOM.render(
-  <Inc/>,
+  <Btn/>,
   document.getElementById('root')
-)
+);

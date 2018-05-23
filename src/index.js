@@ -1,37 +1,44 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 
-class Formtest extends React.Component{
+class Calculator extends React.Component{
   constructor(props){
     super(props)
-    this.state = {value: 'aladin'}
+      this.state = {scale: 'c', temp: 0}
   }
 
-  handleChange = (e) => {
-    this.setState({
-      value : !this.state.value
-    })
+  handleCelsius = (e) => {
+    this.setState({scale:'c', temp:e.target.value})
   }
 
-  handleSubmit = (e) => {
-    console.log(this.state.value)
-    e.preventDefault()
+  handleFahrenheit = (e) => {
+    this.setState({scale:'f', temp:e.target.value})
   }
 
   render(){
-    return (
-      <form onSubmit={this.handleSubmit}>
-        <select value={this.state.value} onChange={this.handleChange}>
-          <option value='pikachu'>Pikachu</option>
-          <option value='aladin'>Aladin</option>
-        </select>
-        <input type='submit' value='Go Ahead' />
-      </form>
+    const temp = this.state.temp
+    const scale = this.state.scale
+    const celsius = scale === 'f' ? (temp - 32) * (5/9) : temp;
+    const fahrenheit = scale === 'c' ? (temp * 9/5) + 32 : temp;
+
+    return(
+      <div>
+        <fieldset>
+          <legend>Scale Celsius</legend>
+          <input value={celsius} onChange={this.handleCelsius}/>
+        </fieldset>
+
+        <fieldset>
+          <legend>Scale Fahrenheit</legend>
+          <input value={fahrenheit} onChange={this.handleFahrenheit}/>
+        </fieldset>
+      </div>
     )
   }
 }
 
+
 ReactDOM.render(
-  <Formtest />,
+  <Calculator />,
   document.getElementById('root')
 );
